@@ -167,6 +167,24 @@ CREATE TABLE patient_info(
    updated_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
+ALTER TABLE patient_info
+ADD COLUMN disease TEXT,
+ADD COLUMN doctor_name VARCHAR(255),
+ADD COLUMN appointment_date DATE;
+
+
+-- CREATE TABLE patients (
+--     id INT AUTO_INCREMENT PRIMARY KEY,
+--     name VARCHAR(255) NOT NULL,
+--     age INT NOT NULL,
+--     gender ENUM('Male', 'Female', 'Other') NOT NULL,
+--     contact VARCHAR(10) NOT NULL,
+--     disease VARCHAR(255) NOT NULL,
+--     doctor VARCHAR(255) NOT NULL,
+--     appointment_date DATE NOT NULL,
+--     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+-- );
+
 
 CREATE TABLE index_info(
   id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -289,6 +307,84 @@ CREATE TABLE doctors (
     created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
+-- ALTER TABLE doctors
+-- ADD COLUMN gender VARCHAR(10) AFTER name,
+-- ADD COLUMN dob DATE AFTER gender,
+-- ADD COLUMN email VARCHAR(255) AFTER dob,
+-- ADD COLUMN mobile VARCHAR(20) AFTER email,
+-- ADD COLUMN address TEXT AFTER mobile,
+-- ADD COLUMN marital_status VARCHAR(20) AFTER address,
+-- ADD COLUMN department VARCHAR(100) AFTER marital_status,
+-- ADD COLUMN qualification VARCHAR(255) AFTER department,
+-- ADD COLUMN reg_no VARCHAR(100) AFTER qualification,
+-- ADD COLUMN bio TEXT AFTER reg_no,
+-- ADD COLUMN photo VARCHAR(255) AFTER bio;
+
+
+
+
+CREATE TABLE doctor (
+    doctor_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    photo VARCHAR(255) DEFAULT NULL,
+    gender ENUM('Male', 'Female', 'Other') DEFAULT NULL,
+    dob DATE DEFAULT NULL,
+    email VARCHAR(255) DEFAULT NULL,
+    mobile VARCHAR(20) DEFAULT NULL,
+    address TEXT DEFAULT NULL,
+    marital_status ENUM('Single', 'Married') DEFAULT NULL,
+    department VARCHAR(100) DEFAULT NULL,
+    qualification VARCHAR(255) DEFAULT NULL,
+    reg_no VARCHAR(100) DEFAULT NULL,
+    bio TEXT DEFAULT NULL
+);
+
+CREATE TABLE agent (
+    agent_id INT AUTO_INCREMENT PRIMARY KEY,
+    agent_name VARCHAR(100) NOT NULL,          -- required: name of the agent/test
+    parameters VARCHAR(255) NOT NULL,          -- required: what is being measured/tested
+    low_range FLOAT NOT NULL,                  -- required: minimum reference value
+    top_range FLOAT NOT NULL,                  -- required: maximum reference value
+    rate FLOAT NOT NULL,                       -- required: cost of the test
+    gender VARCHAR(10),                        -- optional: Male/Female/Other
+    email VARCHAR(100),                        -- optional: email of the agent
+    mobile VARCHAR(50),                        -- optional: contact number
+    address VARCHAR(255),                      -- optional: address
+    qualification VARCHAR(100),                -- optional: qualification
+    bio TEXT,                                  -- optional: short bio or description
+    created_by INT,                            -- optional: who created this record
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE test (
+  test_id INT AUTO_INCREMENT PRIMARY KEY,
+  test_name VARCHAR(100) NOT NULL,
+  parameters TEXT,
+  low_range DECIMAL(10,2),
+  top_range DECIMAL(10,2),
+  rate DECIMAL(10,2),
+  gender VARCHAR(10),
+  email VARCHAR(100),
+  mobile VARCHAR(20),
+  address VARCHAR(255),
+  qualification VARCHAR(100),
+  bio TEXT,
+  created_by INT,
+  status TINYINT(1) DEFAULT 1, -- 1 = active, 0 = inactive
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+CREATE TABLE test_group (
+  group_id INT AUTO_INCREMENT PRIMARY KEY,
+  group_name VARCHAR(100) NOT NULL,
+  test_ids JSON NOT NULL,          -- store test IDs as JSON array
+  created_by INT,
+  status TINYINT(1) DEFAULT 1,    -- 1 = active, 0 = inactive
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
 
 CREATE TABLE available_days (
     id INT AUTO_INCREMENT PRIMARY KEY,

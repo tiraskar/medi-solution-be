@@ -1,5 +1,15 @@
-const authControllers = require('./auth/authControllers')
+const authControllers = require("./auth/authControllers");
+const patientControllers = require("./patient/patientControllers");
+const doctorControllers = require("./doctor/doctorController");
+const agentControllers = require("./agent/agentController");
+const testControllers = require("./test/testController");
+const testGroupControllers = require("./testgroup/testGroupController");
 
 module.exports = {
-    authControllers,
-}
+  authControllers,
+  patientControllers,
+  doctorControllers,
+  agentControllers,
+  testControllers,
+  testGroupControllers,
+};
