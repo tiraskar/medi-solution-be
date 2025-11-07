@@ -61,6 +61,15 @@ const findTestGroupsByStatus = async (Group_id) => {
   }
 };
 
+const findAllTestGroups = async () => {
+  try {
+    const groups = await Group.findAllGroupsWithTests(); // fetch all groups from DB
+    return groups;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
 module.exports = {
   createtestGroup,
   getAlltestGroups,
@@ -68,4 +77,5 @@ module.exports = {
   updateTestGroup,
   deleteTestGroup,
   findTestGroupsByStatus,
+  findAllTestGroups,
 };

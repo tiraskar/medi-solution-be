@@ -11,6 +11,9 @@ router.post("/", testGroupControllers.createtestGroup);
 // Get all tests
 router.get("/", testGroupControllers.getAlltestGroups);
 
+//getTestGroup
+router.get("/group", testGroupControllers.getAllTestGroups);
+
 // Get test by ID
 router.get("/:id", testGroupControllers.gettestGroupById);
 

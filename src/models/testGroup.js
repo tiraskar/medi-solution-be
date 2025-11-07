@@ -1,3 +1,4 @@
+const { log } = require("winston");
 const con = require("../config/database"); // your MySQL connection
 
 // Find test group by ID
@@ -74,6 +75,31 @@ const findByStatus = async (status) => {
   }));
 };
 
+const findAllGroupsWithTests = async () => {
+  const [groups] = await con.query("SELECT * FROM test_group WHERE status = 1");
+
+  const results = await Promise.all(
+    groups.map(async (group) => {
+      console.log(group.test_ids); // just to confirm it’s an array
+
+      // fetch related tests
+      const [tests] = await con.query(
+        "SELECT * FROM test WHERE test_id IN (?)",
+        [group.test_ids]
+      );
+
+      return {
+        group_id: group.group_id,
+        group_name: group.group_name,
+        tests,
+        created_by: group.created_by,
+      };
+    })
+  );
+
+  return results;
+};
+
 module.exports = {
   findById,
   findAll,
@@ -81,4 +107,5 @@ module.exports = {
   update,
   remove,
   findByStatus,
+  findAllGroupsWithTests,
 };

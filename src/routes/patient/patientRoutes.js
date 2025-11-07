@@ -10,29 +10,34 @@ const auth = require("../../middlewares/auth/auth"); // If routes are protected
 //  Create new patient
 router.post(
   "/",
-  auth, // optional, only if user must be logged in
+  // auth, // optional, only if user must be logged in
   //   createPatientValidation, // optional validation middleware
   patientControllers.createPatient
 );
 
+router.get(
+  "/search",
+  // auth, // optional
+  patientControllers.searchPatient
+);
 //  Get all patients
 router.get(
   "/",
-  auth, // optional
+  // auth, // optional
   patientControllers.getAllPatients
 );
 
 //  Get single patient by ID
 router.get(
   "/:id",
-  auth, // optional
+  // auth, // optional
   patientControllers.getPatientById
 );
 
 //  Update patient
 router.put(
   "/:id",
-  auth, // optional
+  // auth, // optional
   //   updatePatientValidation, // optional validation middleware
   patientControllers.updatePatient
 );
@@ -40,7 +45,7 @@ router.put(
 //  Delete patient
 router.delete(
   "/:id",
-  auth, // optional
+  // auth, // optional
   patientControllers.deletePatient
 );
 

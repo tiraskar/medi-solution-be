@@ -23,4 +23,10 @@ router.post(
   authControllers.logout
 );
 
+router.post(
+  "/update",
+  // auth,
+  // refreshTokenValidation,
+  authControllers.logout
+);
 module.exports = router;

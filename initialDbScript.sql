@@ -136,6 +136,22 @@ CREATE TABLE IF NOT EXISTS local_level (
 ) CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
+CREATE TABLE patients (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name TEXT NOT NULL,
+    last_name TEXT,
+    age INT NOT NULL,
+    gender TEXT NOT NULL,
+    contact TEXT NOT NULL,
+    disease TEXT,
+    doctor_name VARCHAR(255),
+    appointment_date DATE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+
+
 CREATE TABLE patient_info(
    patient_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
    first_name TEXT CHARACTER SET UTF8MB4 COLLATE UTF8MB4_UNICODE_CI NOT NULL,

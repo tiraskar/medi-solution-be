@@ -11,9 +11,9 @@ const createPatient = async (patientData) => {
 };
 
 // Get all patients
-const getAllPatients = async () => {
+const getAllPatients = async (data) => {
   try {
-    const patients = await Patient.findAll();
+    const patients = await Patient.findAll(data);
     return patients;
   } catch (error) {
     throw new Error(error);
@@ -50,10 +50,15 @@ const deletePatient = async (patient_id) => {
   }
 };
 
+const searchPatient = async (data) => {
+  return await Patient.searchPatient(data);
+};
+
 module.exports = {
   createPatient,
   getAllPatients,
   getPatientById,
   updatePatient,
   deletePatient,
+  searchPatient,
 };

@@ -120,6 +120,21 @@ const getTestGroupsByStatus = async (req, res) => {
   }
 };
 
+const getAllTestGroups = async (req, res) => {
+  try {
+    const groupsWithTests = await testGroupServices.findAllTestGroups();
+
+    if (!groupsWithTests.length) {
+      return next(new Error("No test groups found"));
+    }
+
+    res.json(groupsWithTests);
+  } catch (error) {
+    console.error("Error fetching test groups:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 module.exports = {
   createtestGroup,
   getAlltestGroups,
@@ -127,4 +142,5 @@ module.exports = {
   updatetestGroup,
   deletetestGroup,
   getTestGroupsByStatus,
+  getAllTestGroups,
 };
