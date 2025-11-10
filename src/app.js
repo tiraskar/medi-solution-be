@@ -10,6 +10,7 @@ const {
   agentRoutes,
   testRoutes,
   testGroupRoutes,
+  ledgerRoutes,
 } = require("./routes");
 const logger = require("./config/winstonLoggerConfig");
 const errorHandler = require("./utils/errorHandler");
@@ -42,6 +43,7 @@ app.use("/api/patient", patientRoutes);
 app.use("/api/agent", agentRoutes);
 app.use("/api/test", testRoutes);
 app.use("/api/testgroup", testGroupRoutes);
+app.use("/api/accounting", ledgerRoutes);
 
 app.use(errorHandler);
 

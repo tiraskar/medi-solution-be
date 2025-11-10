@@ -4,6 +4,7 @@ const doctorControllers = require("./doctor/doctorController");
 const agentControllers = require("./agent/agentController");
 const testControllers = require("./test/testController");
 const testGroupControllers = require("./testgroup/testGroupController");
+const ledgerControllers = require("./ledger/ledgerController");
 
 module.exports = {
   authControllers,
@@ -12,4 +13,5 @@ module.exports = {
   agentControllers,
   testControllers,
   testGroupControllers,
+  ledgerControllers,
 };

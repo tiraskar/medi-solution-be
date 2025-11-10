@@ -73,10 +73,32 @@ const remove = async (agent_id) => {
   return result[0]; // contains affectedRows
 };
 
+const searchAgents = async (data) => {
+  const { keyword = "", limit = 10, page = 1 } = data;
+
+  let query = `SELECT * FROM agent WHERE 1=1`;
+  const params = [];
+
+  if (keyword) {
+    // Search across multiple fields
+    query += ` AND (agent_name LIKE ? OR email LIKE ? )`;
+    params.push(`%${keyword}%`, `%${keyword}%`);
+  }
+
+  // Pagination
+  const offset = (page - 1) * limit;
+  query += ` LIMIT ? OFFSET ?`;
+  params.push(parseInt(limit), parseInt(offset));
+
+  const [rows] = await con.query(query, params);
+  return rows; // array of Agents
+};
+
 module.exports = {
   findById,
   findAll,
   save,
   update,
   remove,
+  searchAgents,
 };

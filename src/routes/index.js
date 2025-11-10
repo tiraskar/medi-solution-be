@@ -4,6 +4,7 @@ const doctorRoutes = require("./doctor/doctorRoutes");
 const agentRoutes = require("./agent/agentRoutes");
 const testRoutes = require("./test/testRoutes");
 const testGroupRoutes = require("./testgroup/testGroupRoutes");
+const ledgerRoutes = require("./accounting/ledgerRoutes");
 
 module.exports = {
   authRoutes,
@@ -12,4 +13,5 @@ module.exports = {
   agentRoutes,
   testRoutes,
   testGroupRoutes,
+  ledgerRoutes,
 };

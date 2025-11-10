@@ -1,4 +1,4 @@
-const { createLogger, format, transports } = require('winston');
+        const { createLogger, format, transports } = require('winston');
 const { combine, timestamp, printf } = format;
 const { getCurrentDateTime } = require('../helpers/date');
 const { NODE_ENV } = require('./index');

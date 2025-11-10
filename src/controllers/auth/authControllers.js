@@ -58,17 +58,32 @@ const login = async (req, res, next) => {
 
     logger.info(`Username: ${username} logged in successfully`);
 
+    //For Cross Site
     res.cookie("refresh_token", refresh_token, {
       httpOnly: true,
-      secure: false,
+      secure: true, // HTTPS required for cross-site
+      sameSite: "none", // allows cross-origin cookies
       maxAge: COOKIE_EXPIRY,
     });
 
     res.cookie("access_token", access_token, {
       httpOnly: false,
-      secure: false,
+      secure: true,
+      sameSite: "none",
       maxAge: COOKIE_EXPIRY,
     });
+
+    // res.cookie("refresh_token", refresh_token, {
+    //   httpOnly: true,
+    //   secure: false,
+    //   maxAge: COOKIE_EXPIRY,
+    // });
+
+    // res.cookie("access_token", access_token, {
+    //   httpOnly: false,
+    //   secure: false,
+    //   maxAge: COOKIE_EXPIRY,
+    // });
 
     res.status(200).json({
       username,

@@ -5,6 +5,8 @@ const doctorServices = require("./doctor/doctorServices");
 const agentServices = require("./agent/agentServices");
 const testServices = require("./test/testServices");
 const testGroupServices = require("./testGroup/testGroupServices");
+const ledgerServices = require("./accounting/ledger");
+const economicYearServices = require("./master/economic_year");
 
 module.exports = {
   authServices,
@@ -13,5 +15,6 @@ module.exports = {
   doctorServices,
   agentServices,
   testServices,
-  testGroupServices,
+  ledgerServices,
+  economicYearServices,
 };

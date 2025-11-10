@@ -11,6 +11,8 @@ router.post("/", agentControllers.createAgent);
 // Get all Agents
 router.get("/", agentControllers.getAllAgents);
 
+router.get("/search", agentControllers.searchAgents);
+
 // Get Agent by ID
 router.get("/:id", agentControllers.getAgentById);
 

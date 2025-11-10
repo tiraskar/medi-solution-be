@@ -50,10 +50,15 @@ const deleteAgent = async (Agent_id) => {
   }
 };
 
+const searchAgents = async (data) => {
+  return await Agent.searchAgents(data);
+};
+
 module.exports = {
   createAgent,
   getAllAgents,
   getAgentById,
   updateAgent,
   deleteAgent,
+  searchAgents,
 };

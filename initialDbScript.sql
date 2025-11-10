@@ -478,6 +478,10 @@ CREATE TABLE accounting_ledgerinfo(
   updated_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
+ALTER TABLE accounting_ledgerinfo
+ADD COLUMN transaction_type VARCHAR(20) NOT NULL DEFAULT 'Credit';
+
+
 
 CREATE TABLE accounting_transaction_detail(
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,

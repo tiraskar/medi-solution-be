@@ -2,13 +2,14 @@ const logger = require("../../config/winstonLoggerConfig");
 const CustomErrorHandler = require("../../utils/CustomErrorHandler");
 const { doctorServices } = require("../../services"); // make sure to export it in services/index.js
 const asyncHandler = require("../../middlewares/asyncHandler");
+const { log } = require("winston");
 
 // Create a new doctor
 const createDoctor = asyncHandler(async (req, res, next) => {
   try {
     const doctorData = req.body;
 
-    // console.log(doctorData);
+    // console.log(req.file);
 
     // If a photo is uploaded via Multer, attach its filename to the data
     if (req.file) {

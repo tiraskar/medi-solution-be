@@ -1,47 +1,63 @@
-const con = require('../config/database')
+const con = require("../config/database"); // your MySQL connection
 
-const getLedgerForPatientAdmission = async () => {
+// Save a new ledger
+const saveLedger = async (ledgerData) => {
+  const [result] = await con.query(`INSERT INTO accounting_ledgers SET ?`, [
+    ledgerData,
+  ]);
+  return result;
+};
 
-  const query = `
-      SELECT ledger_group_name, id FROM accounting_ledgergroup WHERE ledger_group_name = 'Account Payable'
-    `
-  const ledgerInfo = await con.query(query)
+// Get all ledgers
+const findAll = async () => {
+  const [rows] = await con.query(
+    `SELECT * FROM accounting_ledgers WHERE status = 1`
+  );
+  return rows;
+};
 
-  return ledgerInfo[0]
+// Get ledger by ID
+const findById = async (ledger_id) => {
+  const [rows] = await con.query(
+    `SELECT * FROM accounting_ledgers WHERE id = ?`,
+    [ledger_id]
+  );
+  return rows[0];
+};
 
-}
+// Update ledger by ID
+const update = async (ledger_id, updateData) => {
+  const [result] = await con.query(
+    `UPDATE accounting_ledgers SET ? WHERE id = ?`,
+    [updateData, ledger_id]
+  );
+  return result;
+};
 
-const getLedgerIdForAdmittedPatient = async (patient_admission_no) => {
+// Delete ledger by ID
+const remove = async (ledger_id) => {
+  const [result] = await con.query(
+    `DELETE FROM accounting_ledgers WHERE id = ?`,
+    [ledger_id]
+  );
+  return result;
+};
 
-  const query = `
-    SELECT 
-      ledger_id
-    FROM 
-      patient_admission_info 
-    WHERE 
-      id = ? 
-  `
-  const result = await con.query(query, [patient_admission_no])
+// Search ledgers by name
+const searchLedgers = async (keyword) => {
+  const [rows] = await con.query(
+    `SELECT * FROM accounting_ledgers WHERE ledgername LIKE ?`,
+    [`%${keyword}%`]
+  );
+  return rows;
+};
 
-  return result[0][0].ledger_id
-}
-
-const getPartyLedgerId = async (party_id) => {
-  const query = `
-    SELECT
-      ledger_id
-    FROM
-      party_info
-    WHERE
-      party_id = ? 
-  `
-  const result = await con.query(query, [party_id])
-  return result[0][0].ledger_id
-}
-
+// Export all functions
 module.exports = {
-  getLedgerForPatientAdmission,
-  getLedgerIdForAdmittedPatient,
-  getPartyLedgerId
-}
-
+  saveLedger,
+  findAll,
+  findById,
+  update,
+  remove,
+  searchLedgers,
+};
