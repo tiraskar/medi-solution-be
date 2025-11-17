@@ -111,9 +111,13 @@ const saveLedgerMapping = async (mappingData) => {
 };
 
 // Get Ledger Mapping Pagination
-const getLedgerMappingPagination = async (limit, offset) => {
+const getLedgerMappingPagination = async (page, limit, offset) => {
   try {
-    const rows = await ledgerService.getLedgerMappingPagination(limit, offset);
+    const rows = await ledgerService.getLedgerMappingPagination(
+      page,
+      limit,
+      offset
+    );
     return rows;
   } catch (error) {
     throw new Error(error);

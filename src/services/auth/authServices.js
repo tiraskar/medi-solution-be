@@ -58,6 +58,15 @@ const getUserDetailsById = async (id) => {
   }
 };
 
+const changePassword = async (user_id, hashedPassword) => {
+  try {
+    let result = await User.changePassword(user_id, hashedPassword);
+    return result;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
 module.exports = {
   findUser,
   saveRefreshToken,
@@ -65,4 +74,5 @@ module.exports = {
   updateRefreshToken,
   logout,
   getUserDetailsById,
+  changePassword,
 };

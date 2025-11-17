@@ -93,6 +93,58 @@ const searchDoctors = async (data) => {
   return rows; // array of doctors
 };
 
+const searchByTableAndDateRange = async (data) => {
+  // Destructure with defaults for all optional parameters
+  const {
+    tableName = "doctor",
+    startDate = null,
+    endDate = null,
+    limit = 10,
+    page = 1,
+  } = data;
+
+  // 1. Initialize query with the chosen table name
+  // The 'WHERE 1=1' allows for easy conditional appending of clauses
+  let query = `
+    SELECT 
+      * FROM 
+      ${tableName} 
+    WHERE 
+      1=1
+  `;
+  const params = [];
+
+  // NOTE: Assuming the date column is named 'created_at' in the table
+  const dateColumn = "created_at";
+
+  // 2. Filter by Date Range (Optional)
+  if (startDate && endDate) {
+    query += ` AND ${dateColumn} BETWEEN ? AND ?`;
+    params.push(startDate, endDate);
+  } else if (startDate) {
+    // If only start date is provided (records after this date)
+    query += ` AND ${dateColumn} >= ?`;
+    params.push(startDate);
+  } else if (endDate) {
+    // If only end date is provided (records up to this date)
+    query += ` AND ${dateColumn} <= ?`;
+    params.push(endDate);
+  }
+
+  // 3. Ordering (Recommended)
+  query += ` ORDER BY ${dateColumn} DESC`;
+
+  // 4. Pagination
+  const offset = (page - 1) * limit;
+  query += ` LIMIT ? OFFSET ?`;
+
+  // Ensure limit and offset are integers
+  params.push(parseInt(limit), parseInt(offset));
+
+  const [rows] = await con.query(query, params);
+  return rows;
+};
+
 module.exports = {
   findById,
   findAll,
@@ -100,4 +152,5 @@ module.exports = {
   update,
   remove,
   searchDoctors,
+  searchByTableAndDateRange,
 };

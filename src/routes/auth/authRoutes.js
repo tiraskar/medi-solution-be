@@ -29,4 +29,6 @@ router.post(
   // refreshTokenValidation,
   authControllers.logout
 );
+
+router.route("/changepassword").post(auth, authControllers.changePassword);
 module.exports = router;

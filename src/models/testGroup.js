@@ -15,7 +15,9 @@ const findById = async (group_id) => {
 // Get all active test groups
 const findAll = async () => {
   const query = `SELECT * FROM test_group WHERE status = 1`;
+  // const countQuery = `Select count(*) from test_group where status = 1`;
   const result = await con.query(query);
+  // const total = await con.query(countQuery);
 
   return result[0];
 };
@@ -80,7 +82,7 @@ const findAllGroupsWithTests = async () => {
 
   const results = await Promise.all(
     groups.map(async (group) => {
-      console.log(group.test_ids); // just to confirm it’s an array
+      // console.log(group.test_ids); // just to confirm it’s an array
 
       // fetch related tests
       const [tests] = await con.query(
@@ -92,6 +94,7 @@ const findAllGroupsWithTests = async () => {
         group_id: group.group_id,
         group_name: group.group_name,
         tests,
+        status: group.status,
         created_by: group.created_by,
       };
     })

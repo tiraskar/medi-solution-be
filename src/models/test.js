@@ -8,10 +8,29 @@ const findById = async (test_id) => {
 };
 
 // Get all active tests (status = 1)
-const findAll = async () => {
-  const query = `SELECT * FROM test`;
-  const result = await con.query(query);
-  return result[0]; // array of tests
+const findAll = async ({ keyword, page, limit } = {}) => {
+  let query = `SELECT * FROM test WHERE 1=1 AND status =1`;
+  const params = [];
+
+  // Optional keyword search (search in test_name or parameters)
+  if (keyword) {
+    query += ` AND (test_name LIKE ? OR parameters LIKE ?)`;
+    params.push(`%${keyword}%`, `%${keyword}%`);
+  }
+
+  // Optional pagination
+  if (limit) {
+    const offset = page && page > 0 ? (page - 1) * limit : 0;
+    query += ` LIMIT ? OFFSET ?`;
+    params.push(parseInt(limit, 10), offset);
+  }
+
+  const countQuery = `SELECT COUNT(*) AS total from test where status =1`;
+  const [countResult] = await con.query(countQuery, params);
+  const total = countResult[0].total;
+
+  const [result] = await con.query(query, params);
+  return { result, total };
 };
 
 // Save new test

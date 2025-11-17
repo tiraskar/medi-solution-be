@@ -29,10 +29,24 @@ const createtest = asyncHandler(async (req, res, next) => {
 // Get all tests
 const getAlltests = asyncHandler(async (req, res, next) => {
   try {
-    const tests = await testServices.getAlltests();
+    const page = req.query.page ? parseInt(req.query.page, 10) : undefined;
+    const limit = req.query.limit ? parseInt(req.query.limit, 10) : undefined;
+    const keyword = req.query.keyword
+      ? req.query.keyword.toString().trim()
+      : undefined;
+
+    const options = {
+      page,
+      limit,
+      keyword,
+    };
+
+    const tests = await testServices.getAlltests(options);
+
     return res.status(200).json({
       status: true,
-      data: tests,
+      data: tests?.result,
+      total: tests?.total,
     });
   } catch (error) {
     logger.error(

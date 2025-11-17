@@ -11,9 +11,9 @@ const createtest = async (TestData) => {
 };
 
 // Get all Tests
-const getAlltests = async () => {
+const getAlltests = async (options) => {
   try {
-    const Tests = await Test.findAll();
+    const Tests = await Test.findAll(options);
     return Tests;
   } catch (error) {
     throw new Error(error);

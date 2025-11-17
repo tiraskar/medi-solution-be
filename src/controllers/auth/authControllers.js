@@ -13,6 +13,8 @@ const { authServices, jwtServices } = require("../../services");
 const CustomErrorHandler = require("../../utils/CustomErrorHandler");
 const bcrypt = require("bcryptjs");
 const axios = require("axios");
+const bcryptService = require("../../services/auth/bcryptservice");
+const asyncHandler = require("../../middlewares/asyncHandler");
 
 const login = async (req, res, next) => {
   try {
@@ -201,9 +203,37 @@ const logout = async (req, res, next) => {
   }
 };
 
+const changePassword = asyncHandler(async (req, res, next) => {
+  const { oldPassword, newPassword } = req.body;
+
+  const user = await authServices.getUserDetailsById(req.user.user_id);
+  // console.log(user);
+
+  const validatePassword = await bcryptService.comparePassword(
+    oldPassword,
+    user[0].password
+  );
+
+  if (!user || !validatePassword) {
+    return res.status(200).json({
+      status: false,
+      message: "Invalid old password",
+    });
+  }
+
+  const hashedPassword = await bcryptService.hashPassword(newPassword);
+
+  await authServices.changePassword(req.user.user_id, hashedPassword);
+  return res.status(200).json({
+    status: true,
+    message: "Password changed successfully",
+  });
+});
+
 module.exports = {
   login,
   getNewToken,
   logout,
   getUserDetailsById,
+  changePassword,
 };

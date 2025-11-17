@@ -22,6 +22,7 @@ router.get("/", doctorControllers.getAllDoctors);
 
 // Search doctors by email, mobile, or name
 router.get("/search", doctorControllers.searchDoctors);
+router.get("/searchbetween", doctorControllers.searchBetween);
 
 // Get doctor by ID
 router.get("/:id", doctorControllers.getDoctorById);

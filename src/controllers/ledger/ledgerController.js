@@ -276,7 +276,11 @@ const getLedgerMappingPagination = async (req, res, next) => {
     const limit = parseInt(req.query.limit) || 10;
     const offset = (page - 1) * limit;
 
-    const data = await ledgerServices.getLedgerMappingPagination(limit, offset);
+    const data = await ledgerServices.getLedgerMappingPagination(
+      page,
+      limit,
+      offset
+    );
 
     return res.status(200).json({
       status: true,

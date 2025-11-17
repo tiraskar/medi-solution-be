@@ -286,12 +286,23 @@ const getUserType = async (user_id) => {
 
 const findByUserId = async (id) => {
   const query = `
-    SELECT user_id, username, name,address,contact,  user_type, created_by
+    SELECT user_id, username, name,password,address,contact,  user_type, created_by
     FROM user 
     WHERE user_id =? AND status=1
     `;
   const result = await con.query(query, [id]);
   return result[0];
+};
+
+const changePassword = async (user_id, password) => {
+  const sql = `
+    UPDATE user
+    SET password = ?
+    WHERE user_id = ?
+  `;
+
+  const [result] = await con.query(sql, [password, user_id]);
+  return result;
 };
 
 module.exports = {
@@ -302,4 +313,5 @@ module.exports = {
   updateUser,
   getUserType,
   findByUserId,
+  changePassword,
 };

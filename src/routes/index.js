@@ -5,6 +5,8 @@ const agentRoutes = require("./agent/agentRoutes");
 const testRoutes = require("./test/testRoutes");
 const testGroupRoutes = require("./testgroup/testGroupRoutes");
 const ledgerRoutes = require("./accounting/ledgerRoutes");
+const BillingTitleMappingInfoRoutes = require("./master/billing_title_mapping");
+const invoiceRoutes = require("./master/invoice");
 
 module.exports = {
   authRoutes,
@@ -14,4 +16,6 @@ module.exports = {
   testRoutes,
   testGroupRoutes,
   ledgerRoutes,
+  BillingTitleMappingInfoRoutes,
+  invoiceRoutes,
 };

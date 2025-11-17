@@ -214,6 +214,32 @@ CREATE TABLE index_info(
 );
 
 
+CREATE TABLE invoice (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    invoice_number VARCHAR(50) NOT NULL,
+    testgroup_id INT,                  -- Added testgroup_id
+    rate DECIMAL(10,2) NOT NULL,
+    expiry_date DATE,
+    payment_mode VARCHAR(50),
+    remarks TEXT,
+    invoice_date DATE,
+    invoice_date_bs VARCHAR(20),
+    expire_date_bs VARCHAR(20),
+    receipt_no VARCHAR(50),
+    total_amount DECIMAL(10,2) NOT NULL,
+    status TINYINT DEFAULT 1,          -- 1 = active, 0 = inactive
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT fk_testgroup FOREIGN KEY (testgroup_id) REFERENCES test_group(group_id)  -- optional if TestGroup table exists
+);
+ALTER TABLE invoice
+ADD COLUMN test_id INT NULL 
+;
+
+
+
+
+
 CREATE TABLE billing_info (
     receipt_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     receipt_no VARCHAR(255) NOT NULL,

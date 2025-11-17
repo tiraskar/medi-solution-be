@@ -7,6 +7,8 @@ const testServices = require("./test/testServices");
 const testGroupServices = require("./testGroup/testGroupServices");
 const ledgerServices = require("./accounting/ledger");
 const economicYearServices = require("./master/economic_year");
+const billingTitleMappingService = require("./master/billing_title_mapping");
+const invoiceServices = require("./accounting/invoice");
 
 module.exports = {
   authServices,
@@ -15,6 +17,7 @@ module.exports = {
   doctorServices,
   agentServices,
   testServices,
+  testGroupServices,
   ledgerServices,
-  economicYearServices,
+  invoiceServices,
 };

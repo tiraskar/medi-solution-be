@@ -3,6 +3,7 @@ const CustomErrorHandler = require("../../utils/CustomErrorHandler");
 const { doctorServices } = require("../../services"); // make sure to export it in services/index.js
 const asyncHandler = require("../../middlewares/asyncHandler");
 const { log } = require("winston");
+const { Doctor } = require("../../models");
 
 // Create a new doctor
 const createDoctor = asyncHandler(async (req, res, next) => {
@@ -143,6 +144,50 @@ const searchDoctors = asyncHandler(async (req, res, next) => {
   });
 });
 
+const searchBetween = asyncHandler(async (req, res, next) => {
+  let { limit, page, tableName, startDate, endDate, ...optionalFilters } =
+    req.query;
+
+  limit = limit ? parseInt(limit, 10) : 10;
+  page = page ? parseInt(page, 10) : 1;
+
+  if (isNaN(limit) || limit <= 0 || isNaN(page) || page <= 0) {
+    return next(
+      new Error("Limit and page, if provided, must be positive integers.")
+    );
+  }
+
+  if (tableName && typeof tableName !== "string") {
+    return next(new Error("Table name must be a string."));
+  }
+
+  if (
+    (startDate && typeof startDate !== "string") ||
+    (endDate && typeof endDate !== "string")
+  ) {
+    return next(
+      new Error("Start date and End date must be strings (YYYY-MM-DD).")
+    );
+  }
+
+  const searchCriteria = {
+    limit,
+    page,
+    tableName,
+    startDate,
+    endDate,
+    ...optionalFilters,
+  };
+
+  const records = await Doctor.searchByTableAndDateRange(searchCriteria);
+
+  res.status(200).json({
+    status: true,
+    count: records.length,
+    data: records,
+  });
+});
+
 module.exports = {
   createDoctor,
   getAllDoctors,
@@ -150,4 +195,5 @@ module.exports = {
   updateDoctor,
   deleteDoctor,
   searchDoctors,
+  searchBetween,
 };

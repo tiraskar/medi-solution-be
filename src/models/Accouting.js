@@ -179,18 +179,30 @@ const saveLedgerMapping = async (mappingData) => {
   return result;
 };
 
-const getLedgerMappingPagination = async (limit, offset) => {
+const getLedgerMappingPagination = async (page = 1, limit = 10) => {
+  page = parseInt(page);
+  limit = parseInt(limit);
+  const offset = (page - 1) * limit;
+
   const [rows] = await con.query(
-    `SELECT alm.id, alm.label, alm.ledger_id, l.ledgername 
+    `SELECT 
+        alm.id, 
+        alm.label, 
+        alm.ledger_id, 
+        l.ledgername 
      FROM accounting_ledger_mapping alm
      LEFT JOIN accounting_ledgerinfo l ON alm.ledger_id = l.id
      ORDER BY alm.id ASC
      LIMIT ? OFFSET ?`,
-    [parseInt(limit) || 10, parseInt(offset) || 0]
+    [limit, offset]
   );
-  // console.log(rows);
 
-  return rows;
+  const [countResult] = await con.query(
+    `SELECT COUNT(*) AS total FROM accounting_ledger_mapping`
+  );
+  const total = countResult[0]?.total || 0;
+
+  return { rows, total };
 };
 
 // Active Ledgers
@@ -209,7 +221,7 @@ const getAssociatedLedgerId = async (groupName) => {
   const [rows] = await con.query(
     `SELECT alm.ledger_id, alm.label, l.id AS ledgerInfo_id
      FROM accounting_ledger_mapping alm
-     LEFT JOIN accounting_ledger_mapping l ON alm.ledger_id = l.id AND l.status = 1
+     LEFT JOIN accounting_ledgerinfo l ON alm.ledger_id = l.id AND l.status = 1
      WHERE alm.label = ?`,
     [groupName]
   );
