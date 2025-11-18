@@ -32,8 +32,6 @@ const getledgerSubGrouplist = async () => {
 
 // Ledger Info
 const saveLedger = async (ledgerData) => {
-  console.log(ledgerData);
-
   const [result] = await con.query(`INSERT INTO accounting_ledgerinfo SET ?`, [
     ledgerData,
   ]);

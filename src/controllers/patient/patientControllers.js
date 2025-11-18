@@ -2,13 +2,37 @@ const logger = require("../../config/winstonLoggerConfig");
 const CustomErrorHandler = require("../../utils/CustomErrorHandler");
 const { patientServices } = require("../../services"); // MySQL patients service
 const asyncHandler = require("../../middlewares/asyncHandler");
+const { ledgerService } = require("../../models");
 
 // CREATE patient
 const createPatient = asyncHandler(async (req, res, next) => {
-  const { first_name, age, gender, contact } = req.body;
+  const { first_name, age, gender, contact, appointment_date } = req.body;
 
   if (!first_name || !age || !gender || !contact) {
     return next(CustomErrorHandler.validationError("Required fields missing"));
+  }
+  // 2. Create Patient
+
+  // 3. Create Ledger with ONLY needed fields
+  const ledgerData = {
+    ledgername: first_name,
+    contact: contact,
+    status: true,
+    ledger_type: "Patient", // recommended but optional
+    master_ledger_group_id: null,
+    ledger_sub_group_id: null,
+    address: req.body.address || null,
+    opening_balance: 0,
+    opening_balance_date: appointment_date || null,
+    functional_year_id: 1,
+    branch_id: 1,
+    created_by: req.user?.id || null,
+    transaction_type: null,
+  };
+
+  const ledger = await ledgerService.saveLedger(ledgerData);
+  if (!ledger) {
+    return next("Ledger is not Created!");
   }
 
   const patient = await patientServices.createPatient(req.body);
@@ -17,7 +41,7 @@ const createPatient = asyncHandler(async (req, res, next) => {
 
   return res.status(201).json({
     status: true,
-    message: "Patient registered successfully",
+    message: "Patient and Ledger registered successfully",
     patient: { id: patient.insertId, ...req.body },
   });
 });

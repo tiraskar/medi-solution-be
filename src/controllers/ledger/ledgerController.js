@@ -101,6 +101,8 @@ const saveLedger = async (req, res, next) => {
       created_by: req?.user?.user_id,
     };
 
+    // console.log(jsonObject);
+
     await ledgerServices.createLedger(jsonObject);
 
     return res.status(201).json(DATA_SAVED());

@@ -263,6 +263,45 @@ CREATE TABLE billing_info (
 );
 
 
+CREATE TABLE billing_infos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    total_amount DECIMAL(10,2) NOT NULL,
+    discount DECIMAL(10,2) DEFAULT 0,
+    transaction_id INT,
+    voucher_number VARCHAR(100),
+    payment_method VARCHAR(50),
+    created_by INT,
+    agent_id INT,
+    doctor_id INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+
+CREATE TABLE billing_info_details (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    test_id INT,
+    group_id INT,
+    date_bs VARCHAR(20),
+    date_ad DATE,
+    rate DECIMAL(10,2),
+    discount DECIMAL(10,2) DEFAULT 0,
+    billing_info_id INT,
+    voucher_number VARCHAR(100),
+    transaction_id INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    status TINYINT DEFAULT 1,
+    created_by INT,
+
+    FOREIGN KEY (billing_info_id) REFERENCES billing_info(id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+
+
+
 CREATE TABLE patient_follow_up_info (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     patient_id INT NOT NULL,
