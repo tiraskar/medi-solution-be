@@ -69,7 +69,7 @@ const addBillingInfoDetails = asyncHandler(async (req, res, next) => {
   try {
     const detailsData = req.body;
 
-    console.log(detailsData);
+    // console.log(detailsData);
 
     // Expected body example:
     // {

@@ -26,6 +26,17 @@ const getledgerGrouplist = async (req, res, next) => {
     return next(error);
   }
 };
+const getledgerinfo = async (req, res, next) => {
+  try {
+    const ledgerGroup = await ledgerServices.getLedgerInfos();
+    return res.status(200).json(SUCCESS_API_FETCH(ledgerGroup));
+  } catch (error) {
+    logger.error(
+      `{ Api:${req.url}, Error:${error.message}, stack:${error.stack} }`
+    );
+    return next(error);
+  }
+};
 
 const getledgerSubGrouplist = async (req, res, next) => {
   try {
@@ -334,4 +345,5 @@ module.exports = {
   getAllLedgerList,
   getBankLedger,
   getallledgerinfo,
+  getledgerinfo,
 };

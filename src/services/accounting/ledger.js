@@ -80,6 +80,16 @@ const getLedgerGroups = async () => {
   }
 };
 
+
+const getLedgerInfos = async () => {
+  try {
+    const groups = await ledgerService.getledgerInfo();
+    return groups;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
 // Get Ledger Group by Name
 const getLedgerGroupByName = async (name) => {
   try {
@@ -181,4 +191,5 @@ module.exports = {
   getLedgerForVehicleRegistration,
   getBankLedgers,
   getallledgerinfo,
+  getLedgerInfos,
 };

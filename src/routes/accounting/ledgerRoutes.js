@@ -13,6 +13,7 @@ const { ledgerControllers } = require("../../controllers");
 // const { preauthorize } = require("../../utils/preAuthorize");
 
 router.route("/getledgergrouplist").get(ledgerControllers.getledgerGrouplist);
+router.route("/getledgerinfo").get(ledgerControllers.getledgerinfo);
 
 router
   .route("/getledgersubgrouplist")
