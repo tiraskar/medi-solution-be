@@ -1,4 +1,4 @@
-const db = require("../../config/db"); // MySQL connection
+const db = require("../config/database"); // MySQL connection
 
 // Ledger Groups
 const getledgerGrouplist = async () => {
@@ -30,6 +30,14 @@ const getledgerSubGrouplist = async () => {
   return rows;
 };
 
+const getledgerInfo = async () => {
+  const [rows] = await db.query(
+    `SELECT id AS ledger_id, ledgername 
+     FROM accounting_ledgerinfo
+     WHERE status = 1`
+  );
+  return rows;
+};
 // Ledger Info
 const saveLedger = async (ledgerData) => {
   const [result] = await db.query(`INSERT INTO accounting_ledgers SET ?`, [
@@ -159,4 +167,5 @@ module.exports = {
   getAssociatedLedgerId,
   getLedgerForVechileRegistration,
   getBankLedger,
+  getledgerInfo
 };
