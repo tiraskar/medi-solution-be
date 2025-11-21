@@ -1,24 +1,26 @@
 const {
-  saveAccountingTransDetail,
-  createBillingInfoDetail,
-  createBillingInfo,
+  // saveAccountingTransDetail,
+  // createBillingInfoDetail,
+  // createBillingInfo,
   getAllBillingInfoDetailsModel,
+  createFullBilling,
 } = require("../../models/Billing_info");
 
-const creteAccountingTransDetail = async (Data) => {
-  try {
-    // Call the model layer to insert invoice
-    const accountingDetail = await saveAccountingTransDetail(Data);
-    return accountingDetail;
-  } catch (error) {
-    throw error;
-  }
-};
+// const creteAccountingTransDetail = async (Data) => {
+//   try {
+//     // Call the model layer to insert invoice
+//     const accountingDetail = await saveAccountingTransDetail(Data);
+//     return accountingDetail;
+//   } catch (error) {
+//     throw error;
+//   }
+// };
 
 const createBillingInfoDetails = async (Data) => {
   try {
     // Call the model layer to insert invoice
-    const billingInfoDetails = await createBillingInfoDetail(Data);
+    // const billingInfoDetails = await createBillingInfoDetail(Data);
+    const billingInfoDetails = await createFullBilling(Data);
     return billingInfoDetails;
   } catch (error) {
     throw error;
@@ -35,19 +37,19 @@ const getAllBillingInfoDetails = async () => {
   }
 };
 
-const createBillingInfoService = async (data) => {
-  try {
-    // Call the model layer to insert billing_info
-    const billingInfo = await createBillingInfo(data);
-    return billingInfo;
-  } catch (error) {
-    throw error;
-  }
-};
+// const createBillingInfoService = async (data) => {
+//   try {
+//     // Call the model layer to insert billing_info
+//     const billingInfo = await createBillingInfo(data);
+//     return billingInfo;
+//   } catch (error) {
+//     throw error;
+//   }
+// };
 
 module.exports = {
-  creteAccountingTransDetail,
+  // creteAccountingTransDetail,
   createBillingInfoDetails,
-  createBillingInfoService,
+  // createBillingInfoService,
   getAllBillingInfoDetails,
 };

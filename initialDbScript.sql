@@ -294,7 +294,7 @@ CREATE TABLE billing_info_details (
     status TINYINT DEFAULT 1,
     created_by INT,
 
-    FOREIGN KEY (billing_info_id) REFERENCES billing_info(id)
+    FOREIGN KEY (billing_info_id) REFERENCES billing_infos(id)
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );

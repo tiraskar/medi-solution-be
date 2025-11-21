@@ -51,7 +51,7 @@ const getallledgerinfo = async () => {
     l.opening_balance_date,
     b.branch_id AS "branch_id",
     b.name AS "branch_name",
-    g.id AS "ledgerGroup.id",
+    g.id AS "ledgerGroup_id",
     g.ledger_group_name AS "ledger_group_name",
     s.id AS "ledger_sub_group_id",
     s.sub_group_name AS "sub_group_name"
@@ -138,7 +138,7 @@ const searchLedgers = async (limit, offset, status, ledgerName, user_id) => {
     l.opening_balance_date,
     b.branch_id AS "branch_id",
     b.name AS "branch_name",
-    g.id AS "ledgerGroup.id",
+    g.id AS "ledgerGroup_id",
     g.ledger_group_name AS "ledger_group_name",
     s.id AS "ledger_sub_group_id",
     s.sub_group_name AS "sub_group_name"
