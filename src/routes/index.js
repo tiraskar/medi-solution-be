@@ -9,6 +9,7 @@ const BillingInfoRoutes = require("./master/billing_info");
 const BillingTitleMappingInfoRoutes = require("./master/billing_title_mapping");
 const invoiceRoutes = require("./master/invoice");
 
+
 module.exports = {
   authRoutes,
   patientRoutes,
@@ -20,4 +21,5 @@ module.exports = {
   BillingTitleMappingInfoRoutes,
   invoiceRoutes,
   BillingInfoRoutes,
+
 };

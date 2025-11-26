@@ -299,6 +299,15 @@ CREATE TABLE billing_info_details (
         ON UPDATE CASCADE
 );
 
+ALTER TABLE billing_info_details
+ADD COLUMN patient_id INT AFTER test_id,
+ADD COLUMN patient_name VARCHAR(255) AFTER patient_id;
+ALTER TABLE billing_info_details
+ADD COLUMN test_name VARCHAR(255);
+ALTER TABLE billing_info_details
+ADD payment_method VARCHAR(50) AFTER transaction_id;
+
+
 
 
 

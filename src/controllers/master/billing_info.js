@@ -51,6 +51,7 @@ const creteAccountingTransDetail = asyncHandler(async (req, res, next) => {
       voucher_number,
       voucher_type,
       functional_year_id,
+      
       branch_id,
       status,
       created_by,
@@ -134,6 +135,7 @@ const addBillingInfo = asyncHandler(async (req, res, next) => {
       created_by,
       agent_id,
       doctor_id,
+      
     };
 
     const result = await createBillingInfoService(billingData);

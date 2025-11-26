@@ -9,6 +9,7 @@ const BillingInfo = require("./master/billing_info");
 const BillingTitleMappingInfo = require("./master/billing_title_mapping");
 const invoiceControllers = require("./master/invoice");
 
+
 module.exports = {
   authControllers,
   patientControllers,

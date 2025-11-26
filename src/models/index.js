@@ -5,7 +5,7 @@ const Doctor = require("./Doctor");
 const Agent = require("./Agent");
 const Test = require("./test");
 const Group = require("./testGroup");
-const ledgerService = require("./AccountingLedgerGroup,"); 
+const ledgerService = require("./AccountingLedgerGroup"); 
 const LedgerInfo = require("./LedgerInfo");
 // const AccountingLedgerGroup = require("./AccountingLedgerGroup,");
 
